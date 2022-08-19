@@ -1,4 +1,5 @@
 import random
+import platform
 import time
 
 from pig_game.computer_player import ComputerPlayer
@@ -18,6 +19,8 @@ class PigGame:
         print("-" * 30)
         current_score = 0
         if player == "computer":
+            print("Computer player's turn!")
+            input("Press any key to continue")
             aim = self.opponent.get_aim(self.scores)
             while current_score < aim:
                 time.sleep(0.2)
@@ -36,6 +39,7 @@ class PigGame:
                 self.scores[player] += current_score
         else:
             print("Your turn!")
+            input("Press any key to continue")
             time.sleep(0.5)
             while True:
                 throw = self.roll_die()
@@ -58,10 +62,10 @@ class PigGame:
         return random.randint(1, 6)
 
     def _print_dice_value(self, throw):
-        print(f"🎲 {self.die_values[throw]}")
-
-    def get_rules(self):
-        return "rules"
+        if platform.system() == "Windows":
+            print(f"Rolling... {throw}")
+        else:
+            print(f"🎲 Rolling... {self.die_values[throw]}")
 
     def get_winner(self):
         return self._winner
